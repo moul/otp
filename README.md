@@ -4,13 +4,17 @@
 
 ## Synopsis
 
-```
-SYNOPSIS
     INPUT | otp <pad>
 
-DESCRIPTION
-    The otp utility 
-```
+## Description
+
+The `otp` utility applies the [OTP](https://en.wikipedia.org/wiki/One-time_pad) cipher against the text passed as input with the key passed as argument.
+
+As for [ROT13](https://en.wikipedia.org/wiki/ROT13), `otp` is its own inverse; that is, to undo `otp`, the same algorithm is applied with the same key.
+
+    $plaintext == $plaintext | otp $key | otp $key
+
+## Usage
 
 ```console
 $ cat file.plain | otp "a-random-string-with-same-the-length-of-the-input-file" > /path/to/file.encrypted
@@ -21,7 +25,7 @@ $ cat file.plain | otp "a-random-string-with-same-the-length-of-the-input-file" 
 ```console
 $ echo "hello world!" | otp "abcdefghijklm"
 <random-looking-binary-output>
-$ echo "hello world!" | otp "abcdefghijklm" | otp "abcdefghijklm"
+$ echo "hello world!"echo  | otp "abcdefghijklm" | otp "abcdefghijklm"
 hello world!
 ```
 
