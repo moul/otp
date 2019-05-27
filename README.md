@@ -23,18 +23,36 @@ $ cat file.plain | otp "a-random-string-with-same-the-length-of-the-input-file" 
 ## Example
 
 ```console
-$ echo "hello world!" | otp "abcdefghijklm"
-<random-looking-binary-output>
-$ echo "hello world!"echo  | otp "abcdefghijklm" | otp "abcdefghijklm"
-hello world!
+$ echo -n "hello world!" | hexdump -C
+00000000  68 65 6c 6c 6f 20 77 6f  72 6c 64 21              |hello world!|
 ```
 
 ```console
-$ echo "hello world!" | otp "abcdefghijklm" | hexdump -C
-00000000  09 07 0f 08 0a 46 10 07  1b 06 0f 4d 67           |.....F.....Mg|
-0000000d
-# test
-$ echo "hello world!" | otp "abcdefghijklm" | otp "abcdefghijklm" | hexdump -C
-00000000  68 65 6c 6c 6f 20 77 6f  72 6c 64 21 0a           |hello world!.|
-0000000d
+$ echo -n "@@@@@@@@@@@@" | hexdump -C
+00000000  40 40 40 40 40 40 40 40  40 40 40 40              |@@@@@@@@@@@@|
+```
+
+```console
+$ echo -n "hello world!" | otp "@@@@@@@@@@@@" | hexdump -C
+00000000  28 25 2c 2c 2f 60 37 2f  32 2c 24 61              |(%,,/`7/2,$a|
+```
+
+```console
+$ echo -n "@@@@@@@@@@@@" | otp "hello world!" | hexdump -C
+00000000  28 25 2c 2c 2f 60 37 2f  32 2c 24 61              |(%,,/`7/2,$a|
+```
+
+```console
+$ echo -n "hello world!" | otp "@@@@@@@@@@@@" | otp "@@@@@@@@@@@@" | hexdump -C
+00000000  68 65 6c 6c 6f 20 77 6f  72 6c 64 21              |hello world!|
+```
+
+```console
+$ echo -n "hello world!" | otp "hello world!" | hexdump -C
+00000000  00 00 00 00 00 00 00 00  00 00 00 00              |............|
+```
+
+```console
+$ printf "\0\0\0\0\0\0\0\0\0\0\0\0" | otp "hello world!" | hexdump -C
+00000000  68 65 6c 6c 6f 20 77 6f  72 6c 64 21              |hello world!|
 ```
