@@ -14,7 +14,7 @@ func main() {
 	}
 
 	key := []byte(os.Args[1])
-	if dat, err := ioutil.ReadFile(string(key)); err != nil { // if key is a path, read the key from this file
+	if dat, err := ioutil.ReadFile(string(key)); err == nil { // if key is a path, read the key from this file
 		key = dat
 	}
 
